@@ -10,10 +10,19 @@ class App extends Component {
     this.addRecipe = this.addRecipe.bind(this);
     this.removeRecipe = this.removeRecipe.bind(this);
 
-    this.state = {
-      selectedRecipe: null,
-      recipes: {}
-    };
+    const store = JSON.parse(localStorage.getItem('__fcc-recipe-box'));
+    if (store) {
+      this.state = store;
+    } else {
+      this.state = {
+        selectedRecipe: null,
+        recipes: {}
+      };
+    }
+  }
+
+  componentWillUpdate(newProps, newState) {
+    localStorage.setItem('__fcc-recipe-box', JSON.stringify(newState));
   }
 
   addRecipe(recipe) {
