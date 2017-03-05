@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
 
     this.addRecipe = this.addRecipe.bind(this);
+    this.removeRecipe = this.removeRecipe.bind(this);
 
     this.state = {
       selectedRecipe: null,
@@ -16,10 +17,15 @@ class App extends Component {
   }
 
   addRecipe(recipe) {
-    console.log(recipe);
     const recipes = {...this.state.recipes};
     const timestamp = Date.now();
     recipes[`recipe-${timestamp}`] = recipe;
+    this.setState({ recipes });
+  }
+
+  removeRecipe(key) {
+    const recipes = {...this.state.recipes};
+    delete recipes[key];
     this.setState({ recipes });
   }
 
@@ -29,6 +35,8 @@ class App extends Component {
         <p>Hello</p>
         <RecipeList
           addRecipe={this.addRecipe}
+          removeRecipe={this.removeRecipe}
+          recipes={this.state.recipes}
         />
         <RecipeDetail />
       </div>
